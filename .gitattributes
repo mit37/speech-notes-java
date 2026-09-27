@@ -1,0 +1,10 @@
+# Spotless enforces LF (see build.gradle.kts), so keep checkouts identical on Windows and CI.
+* text=auto eol=lf
+
+# Binaries that must never be line-ending converted.
+*.jar binary
+*.zip binary
+*.wav binary
+
+# Windows launchers are the one exception: they are checked out with CRLF.
+*.bat text eol=crlf

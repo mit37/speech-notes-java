@@ -1,0 +1,23 @@
+# gitleaks configuration (written for 8.30; the older single `[allowlist]` key is deprecated).
+#
+# The default rule set is left alone. All this adds is a skip list, because a filesystem scan
+# (`--no-git`) otherwise crawls build/ — where the jpackage image carries a copy of the JDK's own
+# java.security, which trips the generic-api-key rule — and models/, where the Vosk weights are
+# several gigabytes. Neither tree is ever committed (STANDARDS §2).
+title = "speech-notes-java"
+
+[extend]
+useDefault = true
+
+# Patterns are unanchored on purpose: with `--source /repo` the paths gitleaks matches are absolute
+# (/repo/build/...), so an anchored '''^build/''' never fires. The leading slash keeps this from
+# matching a source directory that merely happens to be called build.
+[[allowlists]]
+description = "Generated or downloaded trees: never committed, and slow to scan"
+paths = [
+  '''/build/''',
+  '''/models/''',
+  '''/\.gradle/''',
+  '''/\.git/''',
+  '''/recordings/''',
+]

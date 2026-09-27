@@ -1,0 +1,8 @@
+# Hand-written rubric for lecture 04.
+restate the problem
+simplest approach
+complexity
+trade offs
+memory test
+practise three problems
+going quiet

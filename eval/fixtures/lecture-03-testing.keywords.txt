@@ -1,0 +1,9 @@
+# Hand-written rubric for lecture 03.
+never fails
+break the code
+test the rule
+slower version of the framework
+before every commit
+two hundred and thirty tests
+coverage badge
+flaky test

@@ -1,0 +1,9 @@
+# Hand-written rubric for lecture 05.
+index
+reads faster
+writes slower
+composite index
+query plan
+table scan
+statistics
+promises expire

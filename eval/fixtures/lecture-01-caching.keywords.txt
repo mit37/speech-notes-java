@@ -1,0 +1,10 @@
+# Hand-written rubric for lecture 01. scripts/run_eval.sh reports how many of these the
+# transcript actually contains; nothing here is generated from the transcript itself.
+cache
+expiry rule
+stale data
+hit rate
+eighty four percent
+ninety one percent
+two weak caches
+bet about the future
