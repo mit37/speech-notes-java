@@ -4,8 +4,9 @@ Read [`../STANDARDS.md`](../STANDARDS.md) first, then [`../PRD.md`](../PRD.md). 
 disagree, STANDARDS wins. This file restates the plan as checkboxes so progress is visible
 in the repo (STANDARDS §6.1).
 
-- **Repo:** `github.com/mit37/speech-notes-java` — public, MIT (**does not exist on GitHub yet**: no
-  first push, no commits, no tag. Badges in the README are placeholders until then.)
+- **Repo:** `github.com/mit37/speech-notes-java` — public, MIT, live since 2026-09-26 with two commits
+  on `main` (`69d4359` the project, `40711b5` the CI script-permission fix) and CI green. Still to
+  come: the topics, the `v2.0.0` tag with its assets, the demo recording.
 - **Default branch:** `main`
 - **Stack (PRD §4):** Java 21 · Gradle (Kotlin DSL) · JavaFX 21 · Vosk · Jackson · OpenPDF ·
   JUnit 5 + AssertJ + Mockito · TestFX (headless via Monocle) · Spotless + Checkstyle
@@ -25,10 +26,11 @@ in the repo (STANDARDS §6.1).
       and [`../eval/results-large.md`](../eval/results-large.md), both written by `scripts/run_eval.sh`
 - [x] README states exactly which parts are offline — every number in it names the script that
       produced it, and the offline/online split is stated twice
-- [x] The CI pipeline itself is green on this machine: Spotless → Checkstyle → test → test count →
-      package → gitleaks, all six steps, the last one now runnable locally as well
-- [ ] Tag `v2.0.0` — not possible yet: the GitHub repo does not exist, so there is no CI run to point
-      at and nothing has been pushed. See the first-push checklist below.
+- [x] The CI pipeline is green on GitHub and on this machine: Spotless → Checkstyle → test → test
+      count → package → gitleaks, all six steps, the last one runnable locally as well
+- [ ] Tag `v2.0.0` — the repo is pushed and CI is green (run #2, `40711b5`), so this waits only on
+      the release assets: the `jpackage` app image and the demo recording. See the first-push
+      checklist below.
 
 ## DoD → evidence map (STANDARDS §3: every acceptance criterion gets an automated test)
 
@@ -109,25 +111,32 @@ in the repo (STANDARDS §6.1).
 - [x] `docs/DEMO.md` recording script (STANDARDS §5 — GUI project, Mitansh records it)
 - [x] README filled from generated output only; `jpackage` app image built and run by
       `scripts/package_app.sh`
-- [ ] **Tag `v2.0.0`** — blocked on the first push, which is Mitansh's call
+- [ ] **Tag `v2.0.0`** — the push happened on 2026-09-26; this waits on the release assets (app image
+      and demo recording), not on publishing
 - [ ] **Demo recording** — needs a display and a microphone; `docs/DEMO.md` is the script. When it is
       recorded it goes in the release assets and gets linked from the README's first section.
 
 ## First push checklist (Mitansh — STANDARDS §3 and §7)
 
-Nothing here is done from this machine; it needs the GitHub account and the call to publish.
+The first push went out from this machine on 2026-09-26. What is left needs a signed-in GitHub
+session rather than a shell here.
 
-- [ ] `git init` is already done and the tree is uncommitted on purpose: the first commit is the
-      reviewer's decision. When it is made, use Conventional Commits and no backdating.
-- [ ] Create `mit37/speech-notes-java` (public, MIT), push `main`.
-- [ ] Repo description, copied from [`../PRD.md`](../PRD.md) line 4:
+- [x] First commit: `69d4359`, Conventional Commits, real dates, nothing backdated. `gradlew` is
+      committed 100755 so CI's `./gradlew` runs.
+- [x] Create `mit37/speech-notes-java` (public, MIT), push `main` — 2026-09-26.
+- [x] Repo description, copied from [`../PRD.md`](../PRD.md) line 4:
       *Offline speech-to-notes in Java: on-device Vosk transcription, optional Gemini-formatted
-      notes, and screenshot Q&A.*
+      notes, and screenshot Q&A.* — set when the repo was created.
+- [x] CI green on `main`: run #2, `40711b5`. Run #1 on `69d4359` failed at the test-count step with
+      exit 126 because `scripts/test_count.sh` was committed 100644, so Ubuntu would not execute it;
+      `40711b5` sets every `scripts/*.sh` 100755 and adds a CI step that fails with a named error if
+      one is not.
 - [ ] Topics (PRD line 5, 7 of them): `java`, `speech-recognition`, `vosk`, `javafx`, `gemini`,
-      `note-taking`, `offline-first`
-- [ ] Wait for CI green, then tag `v2.0.0` and attach the `jpackage` app image
-      (`scripts/package_app.sh`) plus the demo recording from `docs/DEMO.md` to the release.
-- [ ] Protect `main` once CI is green.
+      `note-taking`, `offline-first` — not added yet; they are typed on the repo page, which needs a
+      signed-in session.
+- [ ] Tag `v2.0.0` and attach the `jpackage` app image (`scripts/package_app.sh`) plus the demo
+      recording from `docs/DEMO.md` to the release.
+- [ ] Protect `main` now that CI is green.
 - [ ] Update the project page on mitanshm.com so its claims match this README (new numbers, the
       v2 note, the repo link) — STANDARDS §7.
 

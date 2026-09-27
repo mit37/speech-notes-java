@@ -8,13 +8,15 @@ Offline speech-to-notes in Java: on-device Vosk transcription, optional Gemini-f
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/mit37/speech-notes-java?include_prereleases&sort=semver)](https://github.com/mit37/speech-notes-java/releases)
 
-**Status: all eight milestones in — the Definition of Done is built, tested and measured locally.**
-The repo is not published yet (no GitHub project, no commits, no `v2.0.0` tag), so the badges above
-are placeholders until the first push. The demo recording is scripted in
-[`docs/DEMO.md`](docs/DEMO.md) and needs a machine with a display and a microphone — this build
-machine has neither, which is also why two tests report `skipped` rather than `passed`. Until that
-take exists, [`eval/results.md`](eval/results.md) is the closest thing to a demo: real audio in,
-recogniser text and measured error rates out, every number produced by a script in this repo.
+**Status: all eight milestones in — the Definition of Done is built, tested and measured locally, and
+CI passes on `main`** (run #2 at `40711b5`: Spotless → Checkstyle → tests → generated test count →
+package → gitleaks. Run #1 failed on a missing executable bit on `scripts/test_count.sh`, fixed in
+that commit.) Two things are still open before `v2.0.0`: the release tag with its attached app image,
+and the demo recording. The recording is scripted in [`docs/DEMO.md`](docs/DEMO.md) and needs a
+machine with a display and a microphone — this build machine has neither, which is also why two tests
+report `skipped` rather than `passed`. Until that take exists, [`eval/results.md`](eval/results.md)
+is the closest thing to a demo: real audio in, recogniser text and measured error rates out, every
+number produced by a script in this repo.
 
 ## The thirty-second version
 
@@ -273,8 +275,9 @@ does not measure is stated at the bottom of [`eval/results.md`](eval/results.md)
   reading them, and five synthetic fixtures are not enough for it.
 - **One machine's numbers.** Every timing here comes from the CPU that ran the scripts. Nothing is
   claimed about any other hardware.
-- **The release is not tagged.** `v2.0.0` follows the first push; nothing has been published, and the
-  badges at the top are placeholders until then.
+- **The release is not tagged.** The code is pushed and CI is green, but there is no `v2.0.0`
+  release yet, so the Release badge shows no version and the packaged app image is not attached to
+  anything.
 
 ## Design decisions
 
