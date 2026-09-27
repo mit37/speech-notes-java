@@ -24,6 +24,20 @@ jobs:
       - name: Validate the Gradle wrapper
         uses: gradle/actions/wrapper-validation@v4
 
+      # The README tells users to run scripts/run_eval.sh and friends directly, so the executable
+      # bit is part of the interface: without it a Linux/macOS checkout fails with exit 126 and no
+      # useful message. The first CI run failed exactly this way on test_count.sh.
+      - name: Check the scripts are executable
+        run: |
+          status=0
+          for script in scripts/*.sh; do
+            if [[ ! -x "$script" ]]; then
+              echo "::error file=$script::$script is not executable — git update-index --chmod=+x $script"
+              status=1
+            fi
+          done
+          exit "$status"
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
