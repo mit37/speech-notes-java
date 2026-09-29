@@ -4,9 +4,10 @@ Read [`../STANDARDS.md`](../STANDARDS.md) first, then [`../PRD.md`](../PRD.md). 
 disagree, STANDARDS wins. This file restates the plan as checkboxes so progress is visible
 in the repo (STANDARDS §6.1).
 
-- **Repo:** `github.com/mit37/speech-notes-java` — public, MIT, live since 2026-09-26 with two commits
-  on `main` (`69d4359` the project, `40711b5` the CI script-permission fix) and CI green. Still to
-  come: the topics, the `v2.0.0` tag with its assets, the demo recording.
+- **Repo:** `github.com/mit37/speech-notes-java` — public, MIT, live since 2026-09-26 and released as
+  `v2.0.0` (annotated tag on `c3f6aff`) with the Windows app image attached, CI green, the seven PRD
+  topics set, and `main` protected with both CI jobs as required status checks. The demo recording is
+  the one item still open.
 - **Default branch:** `main`
 - **Stack (PRD §4):** Java 21 · Gradle (Kotlin DSL) · JavaFX 21 · Vosk · Jackson · OpenPDF ·
   JUnit 5 + AssertJ + Mockito · TestFX (headless via Monocle) · Spotless + Checkstyle
@@ -28,9 +29,9 @@ in the repo (STANDARDS §6.1).
       produced it, and the offline/online split is stated twice
 - [x] The CI pipeline is green on GitHub and on this machine: Spotless → Checkstyle → test → test
       count → package → gitleaks, all six steps, the last one runnable locally as well
-- [ ] Tag `v2.0.0` — the repo is pushed and CI is green (run #2, `40711b5`), so this waits only on
-      the release assets: the `jpackage` app image and the demo recording. See the first-push
-      checklist below.
+- [x] Tag `v2.0.0` — annotated tag on `c3f6aff`, pushed, released with the `jpackage` app image
+      attached (`speech-notes-java-2.0.0-windows-x64.zip`, 91.9 MiB, launcher `--version` exits 0).
+      The demo recording is the one asset still missing from the release.
 
 ## DoD → evidence map (STANDARDS §3: every acceptance criterion gets an automated test)
 
@@ -111,15 +112,15 @@ in the repo (STANDARDS §6.1).
 - [x] `docs/DEMO.md` recording script (STANDARDS §5 — GUI project, Mitansh records it)
 - [x] README filled from generated output only; `jpackage` app image built and run by
       `scripts/package_app.sh`
-- [ ] **Tag `v2.0.0`** — the push happened on 2026-09-26; this waits on the release assets (app image
-      and demo recording), not on publishing
+- [x] **Tag `v2.0.0`** — annotated tag on `c3f6aff`, released 2026-09-28 with the app image attached
 - [ ] **Demo recording** — needs a display and a microphone; `docs/DEMO.md` is the script. When it is
       recorded it goes in the release assets and gets linked from the README's first section.
 
 ## First push checklist (Mitansh — STANDARDS §3 and §7)
 
-The first push went out from this machine on 2026-09-26. What is left needs a signed-in GitHub
-session rather than a shell here.
+The first push went out from this machine on 2026-09-26, and `v2.0.0` was published from the same
+machine on 2026-09-28. Two items are left, and neither is a code change: the demo recording (needs a
+display and a microphone) and the project page on mitanshm.com.
 
 - [x] First commit: `69d4359`, Conventional Commits, real dates, nothing backdated. `gradlew` is
       committed 100755 so CI's `./gradlew` runs.
@@ -131,12 +132,14 @@ session rather than a shell here.
       exit 126 because `scripts/test_count.sh` was committed 100644, so Ubuntu would not execute it;
       `40711b5` sets every `scripts/*.sh` 100755 and adds a CI step that fails with a named error if
       one is not.
-- [ ] Topics (PRD line 5, 7 of them): `java`, `speech-recognition`, `vosk`, `javafx`, `gemini`,
-      `note-taking`, `offline-first` — not added yet; they are typed on the repo page, which needs a
-      signed-in session.
-- [ ] Tag `v2.0.0` and attach the `jpackage` app image (`scripts/package_app.sh`) plus the demo
-      recording from `docs/DEMO.md` to the release.
-- [ ] Protect `main` now that CI is green.
+- [x] Topics (PRD line 5, all 7): `java`, `speech-recognition`, `vosk`, `javafx`, `gemini`,
+      `note-taking`, `offline-first`.
+- [x] Tag `v2.0.0` on `c3f6aff` with the `jpackage` app image attached to the release. The demo
+      recording from `docs/DEMO.md` is still to come — a published release can take assets later.
+- [x] `main` protected. Pull requests are not required: this is a solo repo that the owner pushes to
+      directly, and `enforce_admins` is off so that stays possible. What is enforced is the rest —
+      force-pushes and deletions are off, and both CI jobs (`lint, test, package`, `gitleaks`) are
+      required status checks.
 - [ ] Update the project page on mitanshm.com so its claims match this README (new numbers, the
       v2 note, the repo link) — STANDARDS §7.
 

@@ -8,15 +8,15 @@ Offline speech-to-notes in Java: on-device Vosk transcription, optional Gemini-f
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/mit37/speech-notes-java?include_prereleases&sort=semver)](https://github.com/mit37/speech-notes-java/releases)
 
-**Status: all eight milestones in — the Definition of Done is built, tested and measured locally, and
-CI passes on `main`** (run #2 at `40711b5`: Spotless → Checkstyle → tests → generated test count →
-package → gitleaks. Run #1 failed on a missing executable bit on `scripts/test_count.sh`, fixed in
-that commit.) Two things are still open before `v2.0.0`: the release tag with its attached app image,
-and the demo recording. The recording is scripted in [`docs/DEMO.md`](docs/DEMO.md) and needs a
-machine with a display and a microphone — this build machine has neither, which is also why two tests
-report `skipped` rather than `passed`. Until that take exists, [`eval/results.md`](eval/results.md)
-is the closest thing to a demo: real audio in, recogniser text and measured error rates out, every
-number produced by a script in this repo.
+**Status: all eight milestones in, released as [`v2.0.0`](https://github.com/mit37/speech-notes-java/releases/tag/v2.0.0)**
+— the Definition of Done is built, tested and measured, CI is green on `main` (run #2 at `40711b5`:
+Spotless → Checkstyle → tests → generated test count → package → gitleaks; run #1 failed on a missing
+executable bit on `scripts/test_count.sh`, fixed in that commit), and the tag carries the packaged
+Windows app image. The one thing still open is the demo recording: it is scripted in
+[`docs/DEMO.md`](docs/DEMO.md) and needs a machine with a display and a microphone — this build machine
+has neither, which is also why two tests report `skipped` rather than `passed`. Until that take exists,
+[`eval/results.md`](eval/results.md) is the closest thing to a demo: real audio in, recogniser text and
+measured error rates out, every number produced by a script in this repo.
 
 ## The thirty-second version
 
@@ -79,7 +79,7 @@ on this machine (Windows 11, Temurin 21.0.10, CPU-only, no GPU).
 | Keyword recall (recogniser, hand-written rubric) | **79.5%** small, **82.1%** large | same scripts, rubric in `eval/fixtures/*.keywords.txt` |
 | Key-term recall (offline formatter, same rubric) | **12.9%** small, **12.5%** large — 4 of the 31 phrases the recogniser heard | same reports, `Key-term recall` column |
 | Model integrity | `sha256 30f26242…42498` small, `sha256 47f9a81e…b69f6` large | pinned in `scripts/download_model.sh`, verified on every download |
-| Packaged app | app image built by `jpackage`; launcher `--version` exits 0 and transcribed the 40.2 s fixture in 4.1 s (RTF 0.10) | `scripts/package_app.sh` |
+| Packaged app | app image built by `jpackage` (`--version` exits 0); transcribed the 40.2 s fixture in 3.4–4.1 s across two runs (**RTF 0.09–0.10**) | `scripts/package_app.sh` — this image **is** the `v2.0.0` release asset |
 | Gemini note quality | **not measured** — no key in the build environment; the paths are tested against a fake HTTP server and a `--dry-run` mode | `FakeGeminiServer` in the test suite |
 
 **The large model was not worth it here.** It is 45× the download (1.8 GB zipped vs 40 MB), twice the
@@ -180,7 +180,10 @@ scripts/run_eval.sh                              # regenerates every number in R
 is what you care about use a plain launcher — `./gradlew installDist` writes one to
 `build/install/speech-notes-java/bin/`, and `scripts/package_app.sh` produces a double-clickable app
 image carrying its own runtime (installers need the platform's tooling: WiX for `msi`, `fakeroot` for
-`deb`).
+`deb`). The Windows build of that image is attached to the [`v2.0.0`
+release](https://github.com/mit37/speech-notes-java/releases/tag/v2.0.0) as a 91.9 MiB zip: unzip it
+and run `speech-notes-java.exe --ui`, and the bundled Java 21 runtime means nothing has to be
+installed first.
 
 The CLI surface, verbatim from `--help`:
 
@@ -275,9 +278,12 @@ does not measure is stated at the bottom of [`eval/results.md`](eval/results.md)
   reading them, and five synthetic fixtures are not enough for it.
 - **One machine's numbers.** Every timing here comes from the CPU that ran the scripts. Nothing is
   claimed about any other hardware.
-- **The release is not tagged.** The code is pushed and CI is green, but there is no `v2.0.0`
-  release yet, so the Release badge shows no version and the packaged app image is not attached to
-  anything.
+- **The release is missing one asset: the demo recording.** `v2.0.0` is tagged with the Windows app
+  image attached; the take scripted in [`docs/DEMO.md`](docs/DEMO.md) needs a display and a
+  microphone, so it is not there yet — a published release can still take assets.
+- **The packaged app image is Windows x64 only.** `scripts/package_app.sh` builds for whatever platform
+  runs it, and only the Windows image has been built and measured here. A macOS or Linux image is one
+  script run away (`jpackage` ships with the JDK), not something this release carries.
 
 ## Design decisions
 
@@ -317,7 +323,6 @@ does not measure is stated at the bottom of [`eval/results.md`](eval/results.md)
 - Built with AI coding agents (Freebuff/GLM built all eight milestones — the scaffold, the pipeline,
   the audio sources, the UI, the Gemini layer, the exporters, the eval and the packaging script)
   under my direction; design, specs, review and evaluation are mine. [`docs/PLAN.md`](docs/PLAN.md)
-  keeps the same record per milestone, and the commit trailers will repeat it once this tree is
-  committed.
+  keeps the same record per milestone, and every commit carries the same note in its trailer.
 - The specification this rebuild follows is in [`PRD.md`](PRD.md); the rules it follows are in
   [`STANDARDS.md`](STANDARDS.md).
