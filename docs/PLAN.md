@@ -136,6 +136,11 @@ display and a microphone) and the project page on mitanshm.com.
       `note-taking`, `offline-first`.
 - [x] Tag `v2.0.0` on `c3f6aff` with the `jpackage` app image attached to the release. The demo
       recording from `docs/DEMO.md` is still to come — a published release can take assets later.
+      The tag deliberately sits on `c3f6aff`, the commit whose CI run was green and whose tree was
+      packaged, and the commits that *record* the release came after it: they could not be written
+      before it existed. So the README inside the `v2.0.0` source tarball is two documentation
+      commits behind `main` on that one point — the release notes link to the current README rather
+      than the tarball's copy.
 - [x] `main` protected. Pull requests are not required: this is a solo repo that the owner pushes to
       directly, and `enforce_admins` is off so that stays possible. What is enforced is the rest —
       force-pushes and deletions are off, and both CI jobs (`lint, test, package`, `gitleaks`) are
